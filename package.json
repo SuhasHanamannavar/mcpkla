@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:algolia": "npx tsx scripts/sync-algolia.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.8.4",
