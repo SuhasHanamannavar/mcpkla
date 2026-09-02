@@ -1,15 +1,15 @@
 import Link from "next/link";
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import Logo from "@/components/Logo";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   return (
     <div
       className="min-h-screen flex flex-col relative"
       style={{
         background:
-          "radial-gradient(800px 500px at 20% 0%, rgba(255, 179, 71, 0.06), transparent 60%)," +
-          "radial-gradient(600px 400px at 90% 100%, rgba(107, 196, 107, 0.05), transparent 60%)," +
+          "radial-gradient(800px 500px at 80% 0%, rgba(107, 196, 107, 0.06), transparent 60%)," +
+          "radial-gradient(600px 400px at 10% 100%, rgba(255, 179, 71, 0.05), transparent 60%)," +
           "linear-gradient(rgba(255, 179, 71, 0.02) 1px, transparent 1px)," +
           "linear-gradient(90deg, rgba(255, 179, 71, 0.02) 1px, transparent 1px)," +
           "var(--bg)",
@@ -50,26 +50,26 @@ export default function LoginPage() {
               <Logo size={64} glow />
             </div>
             <h1 className="heading-display mb-2" style={{ fontSize: "34px" }}>
-              Welcome back
+              Create your account
             </h1>
             <p className="text-sm" style={{ color: "var(--ink-muted)" }}>
-              Sign in to discover, save, and manage your MCP servers
+              Join the community building the AI agent ecosystem
             </p>
           </div>
 
-          {/* Clerk SignIn component with custom styling */}
+          {/* Clerk SignUp component with custom styling */}
           <div
             className="rounded-2xl p-1 relative overflow-hidden"
             style={{
               background:
-                "linear-gradient(135deg, rgba(255, 179, 71, 0.3), rgba(107, 196, 107, 0.2))",
+                "linear-gradient(135deg, rgba(107, 196, 107, 0.25), rgba(255, 179, 71, 0.3))",
               boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
             }}
           >
-            <SignIn
-              path="/login"
+            <SignUp
+              path="/signup"
               routing="path"
-              signUpUrl="/signup"
+              signInUrl="/login"
               appearance={{
                 layout: {
                   socialButtonsPlacement: "top",
@@ -78,7 +78,7 @@ export default function LoginPage() {
                   privacyPageUrl: "#",
                 },
                 variables: {
-                  colorPrimary: "#ffb347",
+                  colorPrimary: "#6bc46b",
                   colorText: "#f5f5f0",
                   colorTextSecondary: "#9a9a90",
                   colorTextOnPrimaryBackground: "#0a0a0a",
@@ -88,7 +88,7 @@ export default function LoginPage() {
                   colorDanger: "#ff6b35",
                   colorSuccess: "#6bc46b",
                   colorWarning: "#ffb347",
-                  colorAlphaShade: "rgba(255, 179, 71, 0.08)",
+                  colorAlphaShade: "rgba(107, 196, 107, 0.08)",
                   colorAlphaText: "rgba(245, 245, 240, 0.06)",
                   colorNeutral: "#9a9a90",
                   borderRadius: "12px",
@@ -108,7 +108,7 @@ export default function LoginPage() {
                   },
                   card: {
                     background: "#141414",
-                    border: "1px solid rgba(255, 179, 71, 0.15)",
+                    border: "1px solid rgba(107, 196, 107, 0.15)",
                     boxShadow: "none",
                   },
                   headerTitle: {
@@ -137,7 +137,7 @@ export default function LoginPage() {
                     fontWeight: 600,
                   },
                   dividerLine: {
-                    background: "rgba(255, 179, 71, 0.1)",
+                    background: "rgba(107, 196, 107, 0.1)",
                   },
                   dividerText: {
                     color: "#6a6a60",
@@ -154,24 +154,24 @@ export default function LoginPage() {
                   },
                   formFieldInput: {
                     background: "#0a0a0a",
-                    border: "1px solid rgba(255, 179, 71, 0.15)",
+                    border: "1px solid rgba(107, 196, 107, 0.15)",
                     color: "#f5f5f0",
                     borderRadius: "10px",
                     transition: "all 0.2s ease",
                     "&:focus": {
-                      borderColor: "#ffb347",
-                      boxShadow: "0 0 0 3px rgba(255, 179, 71, 0.12)",
+                      borderColor: "#6bc46b",
+                      boxShadow: "0 0 0 3px rgba(107, 196, 107, 0.12)",
                     },
                   },
                   formButtonPrimary: {
-                    background: "linear-gradient(135deg, #ffb347, #ff9a2e)",
+                    background: "linear-gradient(135deg, #6bc46b, #4da84d)",
                     color: "#0a0a0a",
                     fontWeight: 700,
                     letterSpacing: "0.01em",
                     transition: "all 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-1px)",
-                      boxShadow: "0 8px 24px rgba(255, 179, 71, 0.3)",
+                      boxShadow: "0 8px 24px rgba(107, 196, 107, 0.25)",
                     },
                   },
                   footerActionLink: {
@@ -184,15 +184,6 @@ export default function LoginPage() {
                   footerActionText: {
                     color: "#9a9a90",
                   },
-                  identityPreviewText: {
-                    color: "#f5f5f0",
-                  },
-                  identityPreviewEditButton: {
-                    color: "#ffb347",
-                  },
-                  formFieldAction: {
-                    color: "#ffb347",
-                  },
                   formFieldErrorText: {
                     color: "#ff6b35",
                   },
@@ -201,14 +192,9 @@ export default function LoginPage() {
                     border: "1px solid rgba(255, 107, 53, 0.25)",
                     color: "#ff8a5c",
                   },
-                  badge: {
-                    background: "rgba(107, 196, 107, 0.12)",
-                    color: "#6bc46b",
-                    border: "1px solid rgba(107, 196, 107, 0.2)",
-                  },
                   otpCodeFieldInput: {
                     background: "#0a0a0a",
-                    border: "1px solid rgba(255, 179, 71, 0.15)",
+                    border: "1px solid rgba(107, 196, 107, 0.15)",
                     color: "#f5f5f0",
                     borderRadius: "10px",
                   },
@@ -218,7 +204,7 @@ export default function LoginPage() {
                   },
                   modalContent: {
                     background: "#141414",
-                    border: "1px solid rgba(255, 179, 71, 0.15)",
+                    border: "1px solid rgba(107, 196, 107, 0.15)",
                   },
                 },
               }}
@@ -229,12 +215,12 @@ export default function LoginPage() {
           <div
             className="mt-6 p-4 rounded-xl text-xs text-center"
             style={{
-              background: "rgba(107, 196, 107, 0.06)",
-              border: "1px solid rgba(107, 196, 107, 0.12)",
+              background: "rgba(255, 179, 71, 0.06)",
+              border: "1px solid rgba(255, 179, 71, 0.12)",
               color: "#9a9a90",
             }}
           >
-            Secured by <span style={{ color: "#6bc46b", fontWeight: 600 }}>Clerk</span> ·
+            Secured by <span style={{ color: "#ffb347", fontWeight: 600 }}>Clerk</span> ·
             End-to-end encrypted authentication
           </div>
         </div>
@@ -243,7 +229,7 @@ export default function LoginPage() {
       {/* Footer */}
       <div className="px-6 py-6 text-center text-xs" style={{ color: "var(--ink-faint)" }}>
         <p>
-          By signing in, you agree to our{" "}
+          By creating an account, you agree to our{" "}
           <a
             href="#"
             className="hover:text-[var(--ink-muted)] transition-colors duration-200"

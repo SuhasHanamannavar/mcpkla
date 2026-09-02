@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Logo from "./Logo";
 import { SparkleIcon, GithubIcon, MenuIcon } from "./icons";
 
@@ -62,10 +63,51 @@ export default function Navbar() {
             <GithubIcon size={15} />
             GitHub
           </a>
-          <Link href="/login" className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>
-            <SparkleIcon size={15} />
-            Get Started
-          </Link>
+
+          <SignedOut>
+            <Link
+              href="/login"
+              className="btn-primary"
+              style={{ padding: "9px 18px", fontSize: "13px" }}
+            >
+              <SparkleIcon size={15} />
+              Get Started
+            </Link>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: {
+                    width: 36,
+                    height: 36,
+                    borderRadius: "10px",
+                  },
+                  userButtonPopoverCard: {
+                    background: "#141414",
+                    border: "1px solid rgba(255, 179, 71, 0.15)",
+                    borderRadius: "14px",
+                    boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5)",
+                  },
+                  userButtonPopoverActionButton: {
+                    color: "#f5f5f0",
+                    "&:hover": {
+                      background: "rgba(255, 179, 71, 0.08)",
+                      color: "#ffb347",
+                    },
+                  },
+                  userButtonPopoverActionButtonText: {
+                    color: "#f5f5f0",
+                  },
+                  userButtonPopoverFooter: {
+                    borderTop: "1px solid rgba(255, 179, 71, 0.1)",
+                  },
+                },
+              }}
+            />
+          </SignedIn>
+
           <button
             className="md:hidden btn-secondary"
             style={{ padding: "9px" }}
