@@ -70,13 +70,11 @@ export default function LoginPage() {
               path="/login"
               routing="path"
               signUpUrl="/signup"
+              socialButtonsPlacement="top"
+              socialButtonsVariant="blockButton"
+              termsPageUrl="#"
+              privacyPageUrl="#"
               appearance={{
-                layout: {
-                  socialButtonsPlacement: "top",
-                  socialButtonsVariant: "blockButton",
-                  termsPageUrl: "#",
-                  privacyPageUrl: "#",
-                },
                 variables: {
                   colorPrimary: "#ffb347",
                 },
