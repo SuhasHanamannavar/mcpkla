@@ -67,7 +67,7 @@ export default function Navbar() {
             GitHub
           </a>
 
-          <SignedOut>
+          
             <Link
               href="/login"
               className="btn-primary"
