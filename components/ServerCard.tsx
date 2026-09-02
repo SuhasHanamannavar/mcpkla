@@ -1,4 +1,4 @@
-import { StarIcon, DownloadIcon, GithubIcon, CheckIcon, categoryIconMap } from "./icons";
+import { StarIcon, DownloadIcon, GithubIcon, CheckIcon } from "./icons";
 
 export type Server = {
   id: string;
@@ -19,7 +19,7 @@ type Props = {
 
 const categoryStyles: Record<string, string> = {
   core: "tag-accent",
-  development: "tag-forest",
+  development: "tag-electric",
   productivity: "tag-muted",
   data: "tag-rust",
   research: "tag-muted",
@@ -38,27 +38,36 @@ export default function ServerCard({ server }: Props) {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center text-lg font-bold"
+            className="w-11 h-11 rounded-xl flex items-center justify-center text-lg font-bold relative"
             style={{
-              background: "var(--accent-soft)",
-              color: "var(--accent)",
+              background: "linear-gradient(135deg, var(--accent-soft), var(--electric-soft))",
+              border: "1px solid var(--line-strong)",
               fontFamily: "'Cormorant Garamond', serif",
             }}
           >
-            {server.name.charAt(0)}
+            <span
+              style={{
+                background: "linear-gradient(135deg, var(--accent), var(--electric))",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              {server.name.charAt(0)}
+            </span>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-[15px] leading-tight" style={{ color: "var(--ink)" }}>
+              <h3 className="font-bold text-[15px] leading-tight tracking-tight" style={{ color: "var(--ink)" }}>
                 {server.name}
               </h3>
               {server.verified && (
                 <span
                   className="w-4 h-4 rounded-full flex items-center justify-center"
-                  style={{ background: "var(--forest)", color: "#1e1c1a" }}
+                  style={{ background: "var(--electric)", color: "#0a0a0a" }}
                   title="Verified"
                 >
-                  <CheckIcon size={11} strokeWidth={2.5} />
+                  <CheckIcon size={11} strokeWidth={2.8} />
                 </span>
               )}
             </div>
@@ -81,7 +90,11 @@ export default function ServerCard({ server }: Props) {
           <span
             key={tag}
             className="text-[11px] px-2 py-1 rounded-md"
-            style={{ background: "rgba(168, 159, 148, 0.06)", color: "var(--ink-faint)" }}
+            style={{
+              background: "rgba(154, 154, 144, 0.06)",
+              color: "var(--ink-faint)",
+              border: "1px solid var(--line)",
+            }}
           >
             {tag}
           </span>
@@ -97,7 +110,7 @@ export default function ServerCard({ server }: Props) {
             {formatNumber(server.installs)} installs
           </span>
           <span className="flex items-center gap-1.5" style={{ color: "var(--accent)" }}>
-            <StarIcon size={13} strokeWidth={2} />
+            <StarIcon size={13} strokeWidth={2.2} />
             {server.rating}
           </span>
         </div>
@@ -106,15 +119,23 @@ export default function ServerCard({ server }: Props) {
             href={server.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:text-[var(--accent)]"
-            style={{ color: "var(--ink-faint)", background: "rgba(168, 159, 148, 0.06)" }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 hover:text-[var(--accent)] hover:border-[var(--accent)]"
+            style={{
+              color: "var(--ink-faint)",
+              background: "rgba(154, 154, 144, 0.04)",
+              border: "1px solid var(--line)",
+            }}
             aria-label={`${server.name} on GitHub`}
           >
             <GithubIcon size={14} />
           </a>
           <button
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
-            style={{ background: "var(--forest-soft)", color: "var(--forest)" }}
+            className="text-xs font-bold px-3 py-1.5 rounded-lg transition-all duration-200 tracking-wide uppercase"
+            style={{
+              background: "var(--electric-soft)",
+              color: "var(--electric)",
+              border: "1px solid rgba(107, 196, 107, 0.2)",
+            }}
           >
             Install
           </button>
