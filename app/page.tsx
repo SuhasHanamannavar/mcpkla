@@ -14,7 +14,7 @@ import {
   ZapIcon,
   CodeIcon,
 } from "@/components/icons";
-
+export const dynamic = 'force-dynamic';
 // Fallback categories in case Supabase fetch fails
 const fallbackCategories = [
   { id: "1", name: "All Servers", slug: "all", icon: "grid", count: 1200 },
