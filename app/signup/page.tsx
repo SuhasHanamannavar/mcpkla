@@ -79,22 +79,6 @@ export default function SignUpPage() {
                 },
                 variables: {
                   colorPrimary: "#6bc46b",
-                  colorBackground: "#141414",
-                  colorDanger: "#ff6b35",
-                  colorSuccess: "#6bc46b",
-                  colorWarning: "#ffb347",
-                  colorAlphaShade: "rgba(107, 196, 107, 0.08)",
-                  colorAlphaText: "rgba(245, 245, 240, 0.06)",
-                  colorNeutral: "#9a9a90",
-                  borderRadius: "12px",
-                  fontFamily: "'Source Sans 3', system-ui, sans-serif",
-                  fontSize: "0.9375rem",
-                  fontWeight: {
-                    normal: 400,
-                    medium: 500,
-                    bold: 600,
-                  },
-                  spacingUnit: "1rem",
                 },
                 elements: {
                   rootBox: {
