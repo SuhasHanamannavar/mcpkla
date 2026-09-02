@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ServerCard, { type Server } from "@/components/ServerCard";
-import { categories } from "@/lib/categories";
+import { createClient } from "@/lib/supabase/server";
 import {
   SearchIcon,
   categoryIconMap,
@@ -14,16 +14,179 @@ import {
   ZapIcon,
   CodeIcon,
 } from "@/components/icons";
-import serversData from "@/public/data/servers.json";
 
-export default function Home() {
-  const servers = serversData as Server[];
+// Fallback categories in case Supabase fetch fails
+const fallbackCategories = [
+  { id: "1", name: "All Servers", slug: "all", icon: "grid", count: 1200 },
+  { id: "2", name: "Core", slug: "core", icon: "core", count: 145 },
+  { id: "3", name: "Development", slug: "development", icon: "code", count: 312 },
+  { id: "4", name: "Productivity", slug: "productivity", icon: "zap", count: 268 },
+  { id: "5", name: "Data & Analytics", slug: "data", icon: "database", count: 189 },
+  { id: "6", name: "Research", slug: "research", icon: "search", count: 156 },
+  { id: "7", name: "Business", slug: "business", icon: "briefcase", count: 130 },
+];
+
+export default async function Home() {
+  let servers: Server[] = [];
+  let categories = fallbackCategories;
+
+  try {
+    const supabase = await createClient();
+
+    // Fetch servers with category names joined
+    const { data: serversData, error: serversError } = await supabase
+      .from("servers")
+      .select(
+        `
+        id,
+        name,
+        slug,
+        description,
+        author,
+        github_url,
+        install_command,
+        tags,
+        installs_count,
+        rating,
+        verified,
+        is_paid,
+        price,
+        featured,
+        categories!inner (
+          name
+        )
+      `
+      )
+      .order("installs_count", { ascending: false })
+      .limit(12);
+
+    if (serversError) {
+      console.error("Error fetching servers:", serversError);
+    } else if (serversData) {
+      servers = serversData.map((s: any) => ({
+        id: s.id,
+        name: s.name,
+        description: s.description,
+        category: s.categories?.name || "Tools",
+        tags: s.tags || [],
+        installs: s.installs_count || 0,
+        rating: s.rating || 0,
+        github: s.github_url || "",
+        author: s.author || "Community",
+        verified: s.verified || false,
+      }));
+    }
+
+    // Fetch categories
+    const { data: categoriesData, error: catError } = await supabase
+      .from("categories")
+      .select("id, name, slug, icon, server_count")
+      .order("server_count", { ascending: false });
+
+    if (catError) {
+      console.error("Error fetching categories:", catError);
+    } else if (categoriesData && categoriesData.length > 0) {
+      categories = categoriesData.map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        icon: c.icon || "grid",
+        count: c.server_count || 0,
+      }));
+    }
+  } catch (e) {
+    console.error("Supabase connection error:", e);
+  }
+
+  // Use fallback servers if Supabase is empty or errored
+  if (servers.length === 0) {
+    servers = [
+      {
+        id: "1",
+        name: "Filesystem",
+        description:
+          "Read, write, and manage files and directories on your local machine directly through AI agents.",
+        category: "Core",
+        tags: ["files", "storage", "local"],
+        installs: 124000,
+        rating: 4.9,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Anthropic",
+        verified: true,
+      },
+      {
+        id: "2",
+        name: "GitHub",
+        description:
+          "Interact with GitHub repositories, issues, PRs, and code search directly from your AI agent.",
+        category: "Development",
+        tags: ["git", "code", "devops"],
+        installs: 89000,
+        rating: 4.8,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Anthropic",
+        verified: true,
+      },
+      {
+        id: "3",
+        name: "PostgreSQL",
+        description:
+          "Query and manage PostgreSQL databases with natural language. Auto-detects schemas and writes safe SQL.",
+        category: "Data & Analytics",
+        tags: ["database", "sql", "analytics"],
+        installs: 67000,
+        rating: 4.7,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Community",
+        verified: false,
+      },
+      {
+        id: "4",
+        name: "Brave Search",
+        description:
+          "Real-time web search powered by Brave. Get fresh information and citations directly in conversations.",
+        category: "Research",
+        tags: ["search", "web", "real-time"],
+        installs: 112000,
+        rating: 4.7,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Brave",
+        verified: true,
+      },
+      {
+        id: "5",
+        name: "Notion",
+        description:
+          "Read, create, and update Notion pages and databases. Your AI agent becomes your knowledge manager.",
+        category: "Productivity",
+        tags: ["notes", "knowledge", "docs"],
+        installs: 78000,
+        rating: 4.8,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Anthropic",
+        verified: true,
+      },
+      {
+        id: "6",
+        name: "Memory",
+        description:
+          "Persistent memory store for AI agents. Save and recall information across conversations and sessions.",
+        category: "Core",
+        tags: ["memory", "persistence", "context"],
+        installs: 88000,
+        rating: 4.9,
+        github: "https://github.com/modelcontextprotocol/servers",
+        author: "Community",
+        verified: false,
+      },
+    ];
+  }
+
   const featured = servers.slice(0, 6);
 
   return (
     <div className="min-h-screen flex flex-col relative" style={{ zIndex: 1 }}>
       <Navbar />
-
       <main className="flex-grow">
         {/* HERO */}
         <section className="max-w-7xl mx-auto px-6 pt-20 pb-14">
@@ -43,7 +206,6 @@ export default function Home() {
                 10,000+ MCP servers · 400M+ monthly downloads
               </span>
             </div>
-
             <h1
               className="reveal reveal-delay-1 heading-display mb-5"
               style={{ fontSize: "clamp(44px, 6.5vw, 76px)" }}
@@ -51,14 +213,12 @@ export default function Home() {
               The open marketplace for{" "}
               <span className="gradient-text">AI agent tools</span>
             </h1>
-
             <p
               className="reveal reveal-delay-2 text-[17px] leading-relaxed mb-10 max-w-2xl mx-auto"
               style={{ color: "var(--ink-muted)" }}
             >
               Discover, install, and share Model Context Protocol servers. Connect Claude Code and any AI agent to files, databases, APIs, and the real world — all in one place.
             </p>
-
             {/* Search */}
             <div className="reveal reveal-delay-3 max-w-2xl mx-auto mb-5">
               <div className="relative">
@@ -75,7 +235,6 @@ export default function Home() {
                 />
               </div>
             </div>
-
             <div
               className="reveal reveal-delay-4 flex flex-wrap items-center justify-center gap-2 text-xs"
               style={{ color: "var(--ink-faint)" }}
@@ -142,24 +301,25 @@ export default function Home() {
               <p className="section-label mb-2" style={{ color: "var(--accent)" }}>
                 Browse by category
               </p>
-              <h2
-                className="heading-display"
-                style={{ fontSize: "38px" }}
-              >
+              <h2 className="heading-display" style={{ fontSize: "38px" }}>
                 Find the right tool for every use case
               </h2>
             </div>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
-            {categories.map((cat) => {
-              const Icon = categoryIconMap[cat.icon] || categoryIconMap.grid;
+            {categories.map((cat: any) => {
+              const Icon =
+                categoryIconMap[cat.icon as keyof typeof categoryIconMap] ||
+                categoryIconMap.grid;
               return (
                 <button key={cat.id} className="category-card">
                   <div className="icon-wrap icon-wrap-accent mb-3">
                     <Icon size={18} />
                   </div>
-                  <div className="text-sm font-semibold mb-0.5" style={{ color: "var(--ink)" }}>
+                  <div
+                    className="text-sm font-semibold mb-0.5"
+                    style={{ color: "var(--ink)" }}
+                  >
                     {cat.name}
                   </div>
                   <div className="text-xs" style={{ color: "var(--ink-faint)" }}>
@@ -178,10 +338,7 @@ export default function Home() {
               <p className="section-label mb-2" style={{ color: "var(--electric)" }}>
                 Featured
               </p>
-              <h2
-                className="heading-display"
-                style={{ fontSize: "38px" }}
-              >
+              <h2 className="heading-display" style={{ fontSize: "38px" }}>
                 Most installed this week
               </h2>
             </div>
@@ -194,7 +351,6 @@ export default function Home() {
               <ArrowRightIcon size={15} />
             </a>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featured.map((server) => (
               <ServerCard key={server.id} server={server} />
@@ -215,7 +371,6 @@ export default function Home() {
               Three simple steps to supercharge your AI agent with real-world capabilities.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
@@ -320,7 +475,6 @@ export default function Home() {
                 >
                   The Model Context Protocol is becoming the open standard for AI tool use. MCP Hub is where the community discovers, shares, and monetizes the tools that make agents actually useful.
                 </p>
-
                 <ul className="space-y-3 mb-8">
                   {[
                     "Open directory — 10,000+ servers from creators worldwide",
@@ -346,7 +500,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-
                 <div className="flex flex-wrap gap-3">
                   <button className="btn-primary">
                     Start exploring
@@ -355,7 +508,6 @@ export default function Home() {
                   <button className="btn-secondary">Submit your server</button>
                 </div>
               </div>
-
               <div className="grid grid-cols-2 gap-4">
                 {[
                   {
@@ -395,18 +547,17 @@ export default function Home() {
                         style={{
                           background: item.colorSoft,
                           color: item.color,
-                          borderColor: item.color.replace(")", ", 0.2)").replace("rgba", "rgba"),
                         }}
                       >
                         <Icon size={18} />
                       </div>
-                      <h4 className="font-semibold text-sm mb-1" style={{ color: "var(--ink)" }}>
+                      <h4
+                        className="font-semibold text-sm mb-1"
+                        style={{ color: "var(--ink)" }}
+                      >
                         {item.title}
                       </h4>
-                      <p
-                        className="text-xs leading-relaxed"
-                        style={{ color: "var(--ink-faint)" }}
-                      >
+                      <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
                         {item.desc}
                       </p>
                     </div>
@@ -418,29 +569,38 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="max-w-4xl mx-auto px-6 mb-20 text-center">
-          <h2 className="heading-display mb-4 leading-tight" style={{ fontSize: "42px" }}>
-            Ready to give your AI agent{" "}
-            <span className="gradient-text">real capabilities</span>?
-          </h2>
-          <p
-            className="text-[15px] mb-8 max-w-xl mx-auto"
-            style={{ color: "var(--ink-muted)" }}
+        <section className="max-w-7xl mx-auto px-6 mb-24">
+          <div
+            className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(255, 179, 71, 0.08) 0%, transparent 70%), var(--card)",
+              border: "1px solid var(--line-strong)",
+            }}
           >
-            Join thousands of developers and AI enthusiasts discovering the best MCP servers every week.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <button className="btn-primary" style={{ padding: "14px 28px", fontSize: "15px" }}>
-              <SparkleIcon size={17} />
-              Explore servers
-            </button>
-            <button className="btn-secondary" style={{ padding: "14px 28px", fontSize: "15px" }}>
-              Read the docs
-            </button>
+            <h2
+              className="heading-display mb-4 max-w-2xl mx-auto"
+              style={{ fontSize: "42px" }}
+            >
+              Ready to supercharge your{" "}
+              <span className="gradient-text">AI agent?</span>
+            </h2>
+            <p
+              className="text-[15px] mb-8 max-w-xl mx-auto"
+              style={{ color: "var(--ink-muted)" }}
+            >
+              Join thousands of developers and creators building the future of AI agent tooling.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button className="btn-primary">
+                Start exploring
+                <ArrowRightIcon size={15} />
+              </button>
+              <button className="btn-secondary">Publish a server</button>
+            </div>
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
