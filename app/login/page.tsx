@@ -79,9 +79,6 @@ export default function LoginPage() {
                 },
                 variables: {
                   colorPrimary: "#ffb347",
-                  colorText: "#f5f5f0",
-                  colorTextSecondary: "#9a9a90",
-                  colorTextOnPrimaryBackground: "#0a0a0a",
                   colorInputBackground: "#0a0a0a",
                   colorInputText: "#f5f5f0",
                   colorBackground: "#141414",
