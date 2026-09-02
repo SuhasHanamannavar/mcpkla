@@ -1,0 +1,194 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #1e1c1a;
+  --bg-soft: #23201d;
+  --card: #2d2823;
+  --card-hover: #3a332c;
+  --ink: #f0ebe4;
+  --ink-muted: #a89f94;
+  --ink-faint: #7a7268;
+  --accent: #c9923c;
+  --accent-soft: rgba(201, 146, 60, 0.14);
+  --forest: #5a8b4d;
+  --forest-soft: rgba(90, 139, 77, 0.14);
+  --rust: #c96b3c;
+  --rust-soft: rgba(201, 107, 60, 0.12);
+  --line: rgba(168, 159, 148, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:
+    radial-gradient(1000px 500px at 85% -5%, rgba(201, 146, 60, 0.06), transparent 60%),
+    radial-gradient(800px 400px at 10% 10%, rgba(90, 139, 77, 0.05), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card);
+  border-radius: 5px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--card-hover);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.6s ease forwards;
+}
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition: all 0.25s ease;
+}
+.glass-card:hover {
+  background: var(--card-hover);
+  border-color: rgba(201, 146, 60, 0.3);
+  transform: translateY(-2px);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+}
+.tag-accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: rgba(201, 146, 60, 0.3);
+}
+.tag-forest {
+  background: var(--forest-soft);
+  color: var(--forest);
+  border-color: rgba(90, 139, 77, 0.3);
+}
+.tag-rust {
+  background: var(--rust-soft);
+  color: var(--rust);
+  border-color: rgba(201, 107, 60, 0.3);
+}
+.tag-muted {
+  background: rgba(168, 159, 148, 0.08);
+  color: var(--ink-muted);
+  border-color: var(--line);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--accent);
+  color: #1e1c1a;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+.btn-primary:hover {
+  background: #d9a04a;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(201, 146, 60, 0.25);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 500;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 18px 14px 48px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+.search-input::placeholder {
+  color: var(--ink-faint);
+}
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.divider {
+  height: 1px;
+  background: var(--line);
+  border: none;
+  margin: 0;
+}
