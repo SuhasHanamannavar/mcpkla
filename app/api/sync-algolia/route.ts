@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     );
 
     const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX || "servers";
-    const index = algolia.initIndex(indexName);
+    const index = (algolia as any).initIndex(indexName);
 
     // Fetch all servers
     const { data: servers, error } = await supabase
