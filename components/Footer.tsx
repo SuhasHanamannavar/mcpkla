@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "./Logo";
 import { GithubIcon } from "./icons";
 
 export default function Footer() {
@@ -19,7 +20,7 @@ export default function Footer() {
           right: 0,
           height: "1px",
           background:
-            "linear-gradient(90deg, transparent, var(--accent), transparent)",
+            "linear-gradient(90deg, transparent, var(--accent), var(--electric), transparent)",
           opacity: 0.4,
         }}
       />
@@ -27,33 +28,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{
-                  background: "linear-gradient(135deg, var(--accent), #ff9a2e)",
-                }}
+              <Logo size={40} />
+              <span
+                className="font-bold text-[17px] tracking-tight"
+                style={{ color: "var(--ink)" }}
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#0a0a0a"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                  <polyline points="2 17 12 22 22 17" />
-                </svg>
-              </div>
-              <span className="font-bold text-[17px] tracking-tight" style={{ color: "var(--ink)" }}>
                 MCP Hub
               </span>
             </div>
-            <p className="text-sm leading-relaxed max-w-md" style={{ color: "var(--ink-muted)" }}>
-              The open marketplace for Model Context Protocol servers. Discover, install, and share
-              tools that connect AI agents to the real world.
+            <p
+              className="text-sm leading-relaxed max-w-md"
+              style={{ color: "var(--ink-muted)" }}
+            >
+              The open marketplace for Model Context Protocol servers. Discover, install, and
+              share tools that connect AI agents to the real world.
             </p>
             <div className="flex items-center gap-3 mt-5">
               <a
@@ -76,28 +64,44 @@ export default function Footer() {
           <div>
             <h4
               className="font-bold text-sm mb-4 tracking-wide uppercase"
-              style={{ color: "var(--accent)", fontSize: "11px", letterSpacing: "0.12em" }}
+              style={{
+                color: "var(--accent)",
+                fontSize: "11px",
+                letterSpacing: "0.12em",
+              }}
             >
               Product
             </h4>
             <ul className="space-y-3 text-sm" style={{ color: "var(--ink-muted)" }}>
               <li>
-                <Link href="#" className="hover:text-[var(--accent)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--accent)] transition-colors duration-200"
+                >
                   Explore Servers
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--accent)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--accent)] transition-colors duration-200"
+                >
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--accent)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--accent)] transition-colors duration-200"
+                >
                   Submit Server
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--accent)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--accent)] transition-colors duration-200"
+                >
                   For Creators
                 </Link>
               </li>
@@ -107,28 +111,44 @@ export default function Footer() {
           <div>
             <h4
               className="font-bold text-sm mb-4 tracking-wide uppercase"
-              style={{ color: "var(--electric)", fontSize: "11px", letterSpacing: "0.12em" }}
+              style={{
+                color: "var(--electric)",
+                fontSize: "11px",
+                letterSpacing: "0.12em",
+              }}
             >
               Resources
             </h4>
             <ul className="space-y-3 text-sm" style={{ color: "var(--ink-muted)" }}>
               <li>
-                <Link href="#" className="hover:text-[var(--electric)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--electric)] transition-colors duration-200"
+                >
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--electric)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--electric)] transition-colors duration-200"
+                >
                   MCP Protocol
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--electric)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--electric)] transition-colors duration-200"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-[var(--electric)] transition-colors duration-200">
+                <Link
+                  href="#"
+                  className="hover:text-[var(--electric)] transition-colors duration-200"
+                >
                   Status
                 </Link>
               </li>
@@ -144,13 +164,22 @@ export default function Footer() {
         >
           <p>2026 MCP Hub. Built for the AI agent ecosystem.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-[var(--ink-muted)] transition-colors duration-200">
+            <Link
+              href="#"
+              className="hover:text-[var(--ink-muted)] transition-colors duration-200"
+            >
               Privacy
             </Link>
-            <Link href="#" className="hover:text-[var(--ink-muted)] transition-colors duration-200">
+            <Link
+              href="#"
+              className="hover:text-[var(--ink-muted)] transition-colors duration-200"
+            >
               Terms
             </Link>
-            <Link href="#" className="hover:text-[var(--ink-muted)] transition-colors duration-200">
+            <Link
+              href="#"
+              className="hover:text-[var(--ink-muted)] transition-colors duration-200"
+            >
               Security
             </Link>
           </div>

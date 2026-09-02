@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "./Logo";
 import { SparkleIcon, GithubIcon, MenuIcon } from "./icons";
 
 export default function Navbar() {
@@ -6,19 +7,14 @@ export default function Navbar() {
     <header
       className="sticky top-0 z-50 backdrop-blur-xl"
       style={{
-        background: "rgba(10, 10, 10, 0.8)",
+        background: "rgba(10, 10, 10, 0.82)",
         borderBottom: "1px solid var(--line)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(255,179,71,0.35)]"
-            style={{
-              background: "linear-gradient(135deg, var(--accent), #ff9a2e)",
-            }}
-          >
-            <LayersIconCustom />
+          <div className="transition-all duration-300 group-hover:scale-105">
+            <Logo size={40} />
           </div>
           <div className="flex flex-col">
             <span
@@ -27,7 +23,10 @@ export default function Navbar() {
             >
               MCP Hub
             </span>
-            <span className="text-[10px] leading-tight tracking-widest uppercase" style={{ color: "var(--ink-faint)" }}>
+            <span
+              className="text-[10px] leading-tight tracking-widest uppercase"
+              style={{ color: "var(--ink-faint)" }}
+            >
               Model Context Protocol
             </span>
           </div>
@@ -63,10 +62,10 @@ export default function Navbar() {
             <GithubIcon size={15} />
             GitHub
           </a>
-          <button className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>
+          <Link href="/login" className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>
             <SparkleIcon size={15} />
             Get Started
-          </button>
+          </Link>
           <button
             className="md:hidden btn-secondary"
             style={{ padding: "9px" }}
@@ -77,23 +76,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  );
-}
-
-function LayersIconCustom() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#0a0a0a"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="12 2 2 7 12 12 22 7 12 2" />
-      <polyline points="2 17 12 22 22 17" />
-    </svg>
   );
 }
