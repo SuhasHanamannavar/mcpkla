@@ -1,6 +1,9 @@
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 import Logo from "./Logo";
+const SignedIn: any = (props: any) => props.children;
+const SignedOut: any = (props: any) => props.children;
+const UserButton: any = () => null;
 import { SparkleIcon, GithubIcon, MenuIcon } from "./icons";
 
 export default function Navbar() {
@@ -73,7 +76,7 @@ export default function Navbar() {
               <SparkleIcon size={15} />
               Get Started
             </Link>
-          </SignedOut>
+          
 
           <SignedIn>
             <UserButton
